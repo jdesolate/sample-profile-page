@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mervin John Tampus | Portfolio & Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Atmospheric Scanlines & Radial Vignette -->
+    <div class="atmosphere"></div>
+    <div class="bg-glow"></div>
+
+    <!-- HUD Telemetry Headers -->
+    <div class="hud top-left">
+        <span class="rec"></span>
+        <span><b>MJT.LAB</b> // ARCHITECTURE & DEV</span>
+    </div>
+    <div class="hud top-right">
+        <span class="rec rec-green"></span>
+        <span><b>SYS.READY</b> [CEBU · 10.3157° N]</span>
+    </div>
+
+    <!-- Master Layout Wrapper -->
+    <div class="dashboard-layout">
+        
+        <!-- Left Column: Sticky Profile Sidebar -->
+        <aside class="sidebar-panel">
+            <div class="hero-section">
+                <div class="avatar-container">
+                    <div class="avatar-ants"></div>
+                    <div class="avatar-frame">
+                        <img src="avatar.png" alt="Profile Picture" class="profile-avatar">
+                    </div>
+                    <div class="status-badge" title="Status: Online & Available">
+                        <span class="rec rec-green"></span>
+                    </div>
+                </div>
+                <h1 class="profile-name">Mervin John Tampus</h1>
+                <p class="profile-title">Computer Engineering Educator & Software Developer</p>
+                
+                <div class="profile-meta-row">
+                    <span class="profile-location">📍 Cebu, Philippines</span>
+                    <span class="profile-status-text"><span class="rec rec-green"></span> Available for Projects</span>
+                </div>
+            </div>
+
+            <div class="content-card sidebar-nav">
+                <div class="card-header-row">
+                    <h2 class="card-title">Quick Links</h2>
+                    <span class="card-badge">[NAV // 01]</span>
+                </div>
+                <div class="footer-actions vertical">
+                    <a href="mailto:contact@example.com" class="pill-btn pill-btn-primary">
+                        <span class="pill-btn-fill"></span>
+                        <span class="pill-btn-label">Get in Touch →</span>
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="pill-btn">
+                        <span class="pill-btn-fill"></span>
+                        <span class="pill-btn-label">GitHub Profile ↗</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Column: Main Content & Interactive Feed -->
+        <main class="main-content-panel">
+            
+            <!-- About Section -->
+            <section class="content-card">
+                <div class="card-header-row">
+                    <h2 class="card-title">About</h2>
+                    <span class="card-badge">[STATEMENT // 01]</span>
+                </div>
+                <p>Bridging the gap between hardware systems and clean, modern web architecture. Specializing in high-performance web applications, developer tooling, and scalable code structures that combine technical precision with high-end digital aesthetics.</p>
+            </section>
+
+            <!-- Core Stack Section -->
+            <section class="content-card">
+                <div class="card-header-row">
+                    <h2 class="card-title">Core Tech Stack</h2>
+                    <span class="card-badge">[MODULES // 06]</span>
+                </div>
+                <div class="tags-grid">
+                    <span class="tag">Next.js</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Supabase</span>
+                    <span class="tag">Tailwind CSS</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Vanilla JS</span>
+                </div>
+            </section>
+
+            <!-- Featured Projects Section -->
+            <section class="content-card">
+                <div class="card-header-row">
+                    <h2 class="card-title">Featured Projects</h2>
+                    <span class="card-badge">[INDEX // 02]</span>
+                </div>
+                <div class="projects-list">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-item">
+                        <span class="project-index">01 //</span>
+                        <div class="project-info">
+                            <h3>Eclair PH</h3>
+                            <p>Web development micro-agency platform for local service businesses.</p>
+                            <span class="project-meta-tag">[CLIENT PLATFORM · ARCHITECTURE]</span>
+                        </div>
+                        <span class="arrow">↗</span>
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-item">
+                        <span class="project-index">02 //</span>
+                        <div class="project-info">
+                            <h3>Department Portal Hub</h3>
+                            <p>Internal academic resource hub built with Next.js and Supabase.</p>
+                            <span class="project-meta-tag">[NEXT.JS · SUPABASE · AUTH]</span>
+                        </div>
+                        <span class="arrow">↗</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Full-Width Arcade Section -->
+            <section class="content-card game-section" id="gameSection">
+                <div class="game-header">
+                    <div class="game-title-wrap">
+                        <span class="rec"></span>
+                        <h2 class="card-title" style="margin-bottom:0;">Mini-Arcade: Space Impact</h2>
+                    </div>
+                    <div class="game-controls-top">
+                        <span class="game-instructions">[CONTROLS: W/S · ARROWS · SPACE]</span>
+                        <button id="fullscreenBtn" class="btn-text" type="button">⛶ Fullscreen</button>
+                    </div>
+                </div>
+                <div class="canvas-container" id="canvasContainer">
+                    <canvas id="spaceImpactCanvas" width="800" height="450"></canvas>
+                    <div id="gameOverlay" class="game-overlay">
+                        <div class="game-overlay-title">SPACE IMPACT</div>
+                        <div class="game-overlay-subtitle">[VECTOR DEFENSE SYSTEM]</div>
+                        <button id="startBtn" class="pill-btn pill-btn-primary" type="button">
+                            <span class="pill-btn-fill"></span>
+                            <span class="pill-btn-label">Launch Mission</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <span class="rec"></span>
+            <span class="footer-copy">© 2026 Mervin John Tampus</span>
+        </div>
+        <div class="footer-right">
+            <span>Built with precision</span>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-link-subtle">GitHub ↗</a>
+        </div>
+    </footer>
+
+    <!-- Custom Interactive Cursor -->
+    <div class="custom-cursor" id="customCursor">
+        <span class="custom-cursor-dot"></span>
+    </div>
+    <div class="custom-cursor-plus" id="customCursorPlus"></div>
+
+    <!-- Embedded Scripts -->
+    <script>
+        /* ---------- Custom Interactive Cursor Controller ---------- */
+        const cursor = document.getElementById('customCursor');
+        const cursorPlus = document.getElementById('customCursorPlus');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let curX = mouseX;
+        let curY = mouseY;
+        let cursorActive = false;
+
+        if (window.innerWidth > 820) {
+            window.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!cursorActive) {
+                    cursorActive = true;
+                    document.body.classList.add('cc-active');
+                    cursor.classList.add('show');
+                    cursorPlus.classList.add('show');
+                }
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursor.classList.remove('show');
+                cursorPlus.classList.remove('show');
+            });
+
+            document.addEventListener('mouseenter', () => {
+                if (cursorActive) {
+                    cursor.classList.add('show');
+                    cursorPlus.classList.add('show');
+                }
+            });
+
+            // Smooth spring loop for cursor
+            function renderCursor() {
+                curX += (mouseX - curX) * 0.22;
+                curY += (mouseY - curY) * 0.22;
+                
+                cursor.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;
+                cursorPlus.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                
+                requestAnimationFrame(renderCursor);
+            }
+            renderCursor();
+
+            // Hover state scaling on interactive elements
+            const hoverTargets = 'a, button, .tag, .project-item, .avatar-container, canvas';
+            document.querySelectorAll(hoverTargets).forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('custom-cursor--hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('custom-cursor--hover'));
+            });
+        }
+
+        /* ---------- Space Impact Game Engine (Awwwards Edition) ---------- */
+        const canvas = document.getElementById('spaceImpactCanvas');
+        const ctx = canvas.getContext('2d');
+        const startBtn = document.getElementById('startBtn');
+        const overlay = document.getElementById('gameOverlay');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const gameSection = document.getElementById('gameSection');
+
+        let gameRunning = false;
+        let score = 0;
+
+        let player = { x: 40, y: 200, width: 34, height: 18, speed: 5.5, dy: 0, cooldown: 0 };
+        let bullets = [];
+        let enemies = [];
+        let keys = {};
+
+        window.addEventListener('keydown', e => {
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                if (document.activeElement !== document.body && document.activeElement.tagName === 'INPUT') return;
+                e.preventDefault();
+            }
+            keys[e.code] = true;
+        });
+        window.addEventListener('keyup', e => keys[e.code] = false);
+
+        startBtn.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            resetGame();
+            gameRunning = true;
+            loop();
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                gameSection.requestFullscreen().catch(err => {
+                    console.warn(`Fullscreen request failed: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        function resetGame() {
+            score = 0;
+            player.y = canvas.height / 2 - 9;
+            bullets = [];
+            enemies = [];
+            gameRunning = true;
+        }
+
+        function spawnEnemy() {
+            if (Math.random() < 0.038) {
+                enemies.push({
+                    x: canvas.width,
+                    y: Math.random() * (canvas.height - 32),
+                    width: 26,
+                    height: 22,
+                    speed: 2.8 + Math.random() * 2.2
+                });
+            }
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            // Player movement
+            if (keys['ArrowUp'] || keys['KeyW']) player.y -= player.speed;
+            if (keys['ArrowDown'] || keys['KeyS']) player.y += player.speed;
+
+            // Boundaries
+            if (player.y < 4) player.y = 4;
+            if (player.y + player.height > canvas.height - 4) player.y = canvas.height - player.height - 4;
+
+            // Shooting action
+            if (keys['Space']) {
+                if (player.cooldown <= 0) {
+                    bullets.push({
+                        x: player.x + player.width,
+                        y: player.y + player.height / 2 - 2.5,
+                        width: 14,
+                        height: 5,
+                        speed: 9
+                    });
+                    player.cooldown = 9; // fire rate limiter
+                }
+            }
+            if (player.cooldown > 0) player.cooldown--;
+
+            // Update Bullets
+            bullets.forEach((b, index) => {
+                b.x += b.speed;
+                if (b.x > canvas.width) bullets.splice(index, 1);
+            });
+
+            // Spawn & Update Enemies
+            spawnEnemy();
+            enemies.forEach((e, eIndex) => {
+                e.x -= e.speed;
+                
+                // Collision with player
+                if (
+                    player.x < e.x + e.width &&
+                    player.x + player.width > e.x &&
+                    player.y < e.y + e.height &&
+                    player.y + player.height > e.y
+                ) {
+                    gameRunning = false;
+                    overlay.style.display = 'flex';
+                    const label = startBtn.querySelector('.pill-btn-label') || startBtn;
+                    label.textContent = 'Mission Over · Retry (Score: ' + score + ')';
+                }
+
+                // Collision with bullets
+                bullets.forEach((b, bIndex) => {
+                    if (
+                        b.x < e.x + e.width &&
+                        b.x + b.width > e.x &&
+                        b.y < e.y + e.height &&
+                        b.y + b.height > e.y
+                    ) {
+                        enemies.splice(eIndex, 1);
+                        bullets.splice(bIndex, 1);
+                        score += 10;
+                    }
+                });
+
+                if (e.x + e.width < 0) enemies.splice(eIndex, 1);
+            });
+        }
+
+        function draw() {
+            // Deep background
+            ctx.fillStyle = '#0a0a0b';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // High-tech architectural grid lines
+            ctx.strokeStyle = 'rgba(232, 230, 222, 0.04)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let j = 0; j < canvas.height; j += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, j);
+                ctx.lineTo(canvas.width, j);
+                ctx.stroke();
+            }
+
+            // Draw player ship (Awwwards acid yellow vector craft)
+            ctx.fillStyle = '#ffe000';
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y);
+            ctx.lineTo(player.x + player.width, player.y + player.height / 2);
+            ctx.lineTo(player.x, player.y + player.height);
+            ctx.lineTo(player.x + 6, player.y + player.height / 2);
+            ctx.closePath();
+            ctx.fill();
+
+            // Cockpit highlight
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(player.x + 12, player.y + player.height / 2 - 2, 8, 4);
+
+            // Draw bullets (Alert Red Energy Beams)
+            ctx.fillStyle = '#ff3b1f';
+            ctx.shadowColor = '#ff3b1f';
+            ctx.shadowBlur = 8;
+            bullets.forEach(b => {
+                ctx.fillRect(b.x, b.y, b.width, b.height);
+            });
+            ctx.shadowBlur = 0; // reset
+
+            // Draw enemies (Cyber Cyan Drone Interceptors)
+            enemies.forEach(e => {
+                ctx.fillStyle = '#00e5ff';
+                ctx.fillRect(e.x, e.y, e.width, e.height);
+                ctx.fillStyle = '#0a0a0b';
+                ctx.fillRect(e.x + 4, e.y + 4, e.width - 8, e.height - 8);
+                ctx.fillStyle = '#ffe000';
+                ctx.fillRect(e.x + e.width / 2 - 2, e.y + e.height / 2 - 2, 4, 4);
+            });
+
+            // Technical HUD Score Display
+            ctx.fillStyle = '#e8e6de';
+            ctx.font = '700 13px "Space Grotesk", sans-serif';
+            ctx.fillText('SCORE // ' + String(score).padStart(4, '0'), 24, 28);
+            ctx.fillStyle = '#83817a';
+            ctx.font = '600 11px "Space Grotesk", sans-serif';
+            ctx.fillText('STATUS: LIVE', canvas.width - 120, 28);
+        }
+
+        function loop() {
+            if (!gameRunning) return;
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+    </script>
+</body>
+</html>

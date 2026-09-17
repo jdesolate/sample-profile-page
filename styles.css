@@ -1,0 +1,956 @@
+/* ============================================================
+   oumahi.art Inspired Design System — Portfolio & Lab
+   Awwwards Site of the Day / Developer Award Aesthetic
+   ============================================================ */
+
+/* ---------- Fonts & Design Tokens ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --bg: #0a0a0b;
+  --paper: #e8e6de;
+  --dim: #83817a;
+  --hairline: rgba(232, 230, 222, 0.14);
+  --hairline-strong: rgba(232, 230, 222, 0.28);
+  --alert: #ff3b1f;
+  --panel: #111110;
+  --panel-card: #131314;
+  --panel-elevated: #18181a;
+  --dur: 0.62s;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --cyan: #00e5ff;
+  --cursor-color: #ffe000;
+  
+  --font-display: "Eurostile MN Extended", "Syne", "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Space Grotesk", monospace, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ---------- Universal Reset ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  selection-background-color: var(--cursor-color);
+}
+
+::selection {
+  background: var(--cursor-color);
+  color: #0a0a0b;
+}
+
+/* ---------- Keyframes (Marching Ants & Blink) ---------- */
+@keyframes blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0.15; }
+  100% { opacity: 1; }
+}
+
+@keyframes marchingAnts {
+  to {
+    background-position: 8px 0, -8px 100%, 0 -8px, 100% 8px;
+  }
+}
+
+@keyframes marchAntsX {
+  to {
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes marchAntsY {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes thumbLoaderSlide {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Atmosphere (Scanlines + Radial Vignette) ---------- */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  background:
+    radial-gradient(ellipse at center, rgba(10, 10, 11, 0) 30%, rgba(10, 10, 11, 0.75) 100%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.02) 0px,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+}
+
+/* Background Ambient Pulse */
+.bg-glow {
+  position: fixed;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(255, 224, 0, 0.04) 0%, rgba(0, 229, 255, 0.02) 40%, rgba(10, 10, 11, 0) 75%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---------- HUD Telemetry Overlays ---------- */
+.hud {
+  position: fixed;
+  z-index: 100;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-weight: 600;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud b {
+  color: var(--paper);
+  font-weight: 700;
+}
+
+.hud.top-left {
+  top: 24px;
+  left: 32px;
+}
+
+.hud.top-right {
+  top: 24px;
+  right: 32px;
+  text-align: right;
+}
+
+.rec {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--alert);
+  vertical-align: middle;
+  box-shadow: 0 0 8px rgba(255, 59, 31, 0.8);
+  animation: blink 1.6s infinite;
+}
+
+.rec-green {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+@media (max-width: 820px) {
+  .hud { display: none !important; }
+}
+
+/* ---------- Master Layout ---------- */
+.dashboard-layout {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 80px 32px 100px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    padding: 32px 20px 80px;
+    gap: 24px;
+  }
+}
+
+.sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 961px) {
+  .sidebar-panel {
+    position: sticky;
+    top: 80px;
+  }
+}
+
+.main-content-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ---------- Content Cards & Architectural Panels ---------- */
+.content-card, .hero-section {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 32px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.content-card:hover {
+  border-color: var(--hairline-strong);
+}
+
+/* Card Technical Header */
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.content-card h2 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.content-card p {
+  color: #b8b6ae;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* ---------- Sidebar Hero Section ---------- */
+.hero-section {
+  text-align: center;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px;
+}
+
+.avatar-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--panel-card);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease);
+}
+
+.avatar-container:hover .avatar-frame {
+  transform: scale(1.04);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(15%) contrast(1.05);
+  transition: filter 0.3s ease;
+}
+
+.avatar-container:hover .profile-avatar {
+  filter: grayscale(0%) contrast(1.1);
+}
+
+/* Avatar Marching Ants Ring on Hover */
+.avatar-ants {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.avatar-ants::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed var(--cursor-color);
+  animation: spinSlow 8s linear infinite;
+}
+
+.avatar-container:hover .avatar-ants {
+  opacity: 1;
+}
+
+.status-badge {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #0a0a0b;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--paper);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.profile-title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cursor-color);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.profile-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  width: 100%;
+}
+
+.profile-location, .profile-status-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.profile-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--paper);
+}
+
+/* ---------- Pill Buttons (Awwwards Sliding Fill) ---------- */
+.footer-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-actions.vertical {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pill-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid var(--paper);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  transition: border-color 0.25s ease, opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.pill-btn-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background: var(--paper);
+  transition: width 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.pill-btn:hover .pill-btn-fill {
+  width: 100%;
+}
+
+.pill-btn-label {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Primary Yellow Variant (Signature Awwwards CTA) */
+.pill-btn-primary {
+  background: var(--cursor-color);
+  border-color: var(--cursor-color);
+  color: #0a0a0b;
+}
+
+.pill-btn-primary .pill-btn-fill {
+  background: #0a0a0b;
+}
+
+.pill-btn-primary .pill-btn-label {
+  color: var(--cursor-color);
+  mix-blend-mode: difference;
+}
+
+.pill-btn-primary:hover {
+  border-color: var(--cursor-color);
+}
+
+.pill-btn:active {
+  opacity: 0.75;
+}
+
+/* Legacy .btn compatibility */
+.btn {
+  composes: pill-btn;
+}
+
+/* ---------- Tech Stack Tags ---------- */
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(232, 230, 222, 0.03);
+  border: 1px solid var(--hairline);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.tag::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--dim);
+  margin-right: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.tag:hover {
+  border-color: var(--cursor-color);
+  background: var(--cursor-color);
+  color: #0a0a0b;
+  transform: translateY(-2px);
+}
+
+.tag:hover::before {
+  background: #0a0a0b;
+}
+
+/* ---------- Featured Projects Section ---------- */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.project-item {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--panel-card);
+  border: 1px solid var(--hairline);
+  padding: 20px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s var(--ease);
+}
+
+.project-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  transition: color 0.25s ease;
+}
+
+.project-info h3 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--paper);
+  margin-bottom: 4px;
+  transition: color 0.25s ease;
+}
+
+.project-info p {
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.5;
+}
+
+.project-meta-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cursor-color);
+  margin-top: 6px;
+}
+
+.project-item .arrow {
+  font-size: 18px;
+  color: var(--dim);
+  transition: transform 0.3s var(--ease), color 0.25s ease;
+}
+
+/* Hover: Marching Ants Frame on Projects */
+.project-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image:
+    linear-gradient(90deg, #0a0a0b 50%, var(--cursor-color) 50%),
+    linear-gradient(90deg, #0a0a0b 50%, var(--cursor-color) 50%),
+    linear-gradient(0deg, #0a0a0b 50%, var(--cursor-color) 50%),
+    linear-gradient(0deg, #0a0a0b 50%, var(--cursor-color) 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 8px 1px, 8px 1px, 1px 8px, 1px 8px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  animation: marchingAnts 0.4s linear infinite;
+  transition: opacity 0.2s ease;
+}
+
+.project-item:hover {
+  border-color: transparent;
+  background: var(--panel-elevated);
+  transform: translateX(4px);
+}
+
+.project-item:hover::after {
+  opacity: 1;
+}
+
+.project-item:hover .project-index {
+  color: var(--cursor-color);
+}
+
+.project-item:hover .project-info h3 {
+  color: var(--cursor-color);
+}
+
+.project-item:hover .arrow {
+  color: var(--cursor-color);
+  transform: translate(3px, -3px);
+}
+
+/* ---------- Arcade Section (Oumahi Museum Terminal) ---------- */
+.game-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.game-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-controls-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-instructions {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.btn-text {
+  font-family: var(--font-display);
+  background: transparent;
+  border: 1px solid var(--hairline);
+  color: var(--paper);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-text:hover {
+  border-color: var(--cursor-color);
+  color: #0a0a0b;
+  background: var(--cursor-color);
+}
+
+/* Canvas Container with Marching Ants Border */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  display: flex;
+  justify-content: center;
+}
+
+.canvas-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+.canvas-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  background: #060608;
+}
+
+/* Game Overlay */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 11, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+  padding: 24px;
+}
+
+.game-overlay-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+.game-overlay-subtitle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.game-overlay .pill-btn {
+  max-width: 240px;
+}
+
+/* Fullscreen adjustments */
+.game-section:fullscreen {
+  background: #0a0a0b;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+}
+
+.game-section:fullscreen canvas {
+  max-height: 80vh;
+}
+
+/* ---------- Custom Interactive Cursor (Oumahi Signature) ---------- */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  box-sizing: border-box;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--cursor-color);
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: #0a0a0b;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: opacity 0.22s ease, transform 0.22s var(--ease), width 0.25s var(--ease), height 0.25s var(--ease), background 0.18s ease;
+  will-change: transform, opacity;
+}
+
+.custom-cursor.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.custom-cursor-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0a0a0b;
+}
+
+.custom-cursor--hover {
+  width: 42px;
+  height: 42px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor--hover .custom-cursor-dot {
+  display: none;
+}
+
+.custom-cursor-plus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.custom-cursor-plus.show {
+  opacity: 0.8;
+}
+
+.custom-cursor-plus::before, .custom-cursor-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--paper);
+}
+
+.custom-cursor-plus::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.custom-cursor-plus::after {
+  left: 50%;
+  top: 0;
+  width: 1.5px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 820px) {
+  .custom-cursor, .custom-cursor-plus {
+    display: none !important;
+  }
+}
+
+body.cc-active, body.cc-active * {
+  cursor: none !important;
+}
+
+/* ---------- Site Footer Bar ---------- */
+.site-footer {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--hairline);
+  padding-top: 24px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-copy {
+  color: var(--dim);
+}
+
+.footer-link-subtle {
+  color: var(--paper);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link-subtle:hover {
+  color: var(--cursor-color);
+}
